@@ -2,7 +2,6 @@ from .chromosome import Chromosome
 import numpy as np
 from typing import List
 from loguru import logger
-from numba import jit
 
 class Population:
 
@@ -34,7 +33,7 @@ class Population:
         # Return the mixing of the two elements
         return [self.mix_two_chromosomes(*np.random.choice(parents, 2, replace=True)) for _ in range(n_offsprings)]
     
-    def mutation(self, parents : List[Chromosome], n_mutations : int, max_mutation : float = 0.5) -> List[Chromosome]:
+    def mutation(self, parents : List[Chromosome], n_mutations : int, max_mutation : float = 0.0005) -> List[Chromosome]:
 
         # Randomly pick n_mutations chromosomes to be mutated
         mutations = np.random.choice(parents, n_mutations, replace=True).tolist()
@@ -68,4 +67,4 @@ class Population:
             top_fitness = self.sort()[0].fitness()
 
             # Print the results
-            logger.info(f"Generation {gen}: top_fitness {round(top_fitness, 5)}")
+            logger.info(f"Generation {gen}: top_fitness {round(top_fitness, 8)}")
